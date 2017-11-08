@@ -43,7 +43,7 @@ int pulse_signal_adc(void)
 
     wiringPiSPIDataRW(spichannel, data, 3);    //写spi同时读取spi的值
 
-    rec = ((1<<8)*(data[1]&0x02))+((1<<8)*(data[1]&0x01))+data[2];    //把三组数据融合到一起
+    rec = ((1<<8)*(data[1]&0x02))+((1<<8)*(data[1]&0x01))+data[2];    //把三组数据融合到一起 10位adc值转int
 
     return rec;
 }
@@ -61,7 +61,6 @@ void period_elapsed(void)
     int i = 0;
     unsigned int runningTotal;
     Signal = pulse_signal_adc();
-	printf("signal: %d\n", Signal);
     sampleCounter = millis();                //时间计算
     Num = sampleCounter - lastBeatTime - send_msg_time;     
     if(Signal < thresh && Num > (IBI/5)*3){

@@ -1,4 +1,4 @@
-﻿ #include <stdio.h>
+﻿#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <wiringPi.h>
@@ -13,7 +13,6 @@ int clockspeed = 500000;
 int spichannel = 0;
 int args[3] = {0};
 int send_msg_time;
-int location_time_interval;
 
 /***********************************************************************************************
 *函数名 ： main
@@ -113,7 +112,7 @@ int main (int argc, char *argv[])
 		if(Qs == true){
 			if(BPM > 200 || BPM <45)      //判断心率是否有效
 				continue;
-			if(BPM < 50){
+			if(BPM  <　50){
 				for(i = 0; i < 10; i++){
 					period_elapsed();
 				}
@@ -164,17 +163,15 @@ int main (int argc, char *argv[])
 					delay(20);
 				}				
 //				i = 0;
+				if(iic_flag == 1)
+				recoder_imu_data();
 			}
 			printf("send_buff %s\n", send_buff);
 			memset(send_buff, 0, sizeof(char)*32);        //清空buff
 			bflag = 0;
 			bpm = 60;
-			delay(20);
+	//		delay(50);
 			send_msg_time = millis() -send_msg_time;
 		}			
-		location_time_interval = millis() - send_msg_time - Num - location_time_interval;
-		if(iic_flag == 1 && location_time_interval >= 5000){
-			recoder_imu_data();
-		}
     }
 }

@@ -11,7 +11,6 @@ extern int IBI;
 extern int BPM;
 extern unsigned char Qs;
 extern int send_msg_time;
-extern int Num;
 
 void period_elapsed(void);
 
